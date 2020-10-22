@@ -55,16 +55,11 @@
 <script>
 import Table from '../components/Table'
 import NavHistory from '../components/NavHistory'
-// import TodayIncome from '../components/TodayIncome'
-// import OrdersChart from '../components/OrdersChart'
-// import IncomeYears from '../components/IncomeYears'
 export default {
+  title: 'Foodcourt | History',
   components: {
     NavHistory,
     Table
-    // TodayIncome,
-    // OrdersChart,
-    // IncomeYears
   }
 }
 </script>

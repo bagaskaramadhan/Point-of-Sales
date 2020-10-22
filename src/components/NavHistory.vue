@@ -2,7 +2,8 @@
     <div>
     <b-row class="header container-fluid">
         <b-col lg="1" cols="1" class="py-2 text-left px-3">
-            <b-button v-b-toggle.my-sidebar>=</b-button>
+              <img v-b-toggle.my-sidebar src="../assets/img/Menu.svg" style="width: 30px">
+
         <Sidebar />
         </b-col>
         <b-col lg="11" cols="11" class="py-2 text-center">
