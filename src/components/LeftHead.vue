@@ -2,9 +2,9 @@
 <div>
     <b-row class="header pt-0">
         <b-col lg="1" cols="1" class="py-2 text-center" >
-            <b-button v-b-toggle.my-sidebar>
-              <b-icon icon="menu-button-wide"></b-icon>
-            </b-button>
+            <!-- <b-button v-b-toggle.my-sidebar> -->
+              <img v-b-toggle.my-sidebar src="../assets/img/Menu.svg" style="width: 30px">
+            <!-- </b-button> -->
         <Sidebar />
         </b-col>
         <b-col lg="11" cols="11" class="py-2 text-center">

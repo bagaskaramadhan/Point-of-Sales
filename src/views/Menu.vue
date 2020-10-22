@@ -168,7 +168,7 @@
                           >
                             <button
                               type="button"
-                              class="btn btn-primary"
+                              class="btn "
                               @click="addCart(item.id,index)"
                             >
                               <b-icon icon="cart-plus-fill"></b-icon>
@@ -180,7 +180,7 @@
                             <button
                               type="button"
                               v-b-modal.editProduct
-                              class="btn btn-warning"
+                              class="btn "
                               @click="updateGet(item.id, index)"
                             >
                               <b-icon icon="pencil"></b-icon>
@@ -192,7 +192,7 @@
                           >
                             <button
                               type="button"
-                              class="btn btn-danger"
+                              class="btn "
                               @click="deleteProduct(item.id)"
                             >
                               <b-icon icon="trash-fill"></b-icon>
@@ -505,7 +505,7 @@ export default {
     },
     getSearch () {
       this.$router.push({
-        path: '/menu',
+        path: '/',
         query: { search: this.search }
       })
       this.searchProduct(this.search)
@@ -527,7 +527,7 @@ export default {
         'success'
       )
       setTimeout(() => {
-        window.location = '/menu'
+        window.location = '/'
       }, 2000)
     },
     deleteProduct (id) {

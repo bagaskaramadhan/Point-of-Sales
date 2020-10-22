@@ -77,7 +77,7 @@ export default {
         'success'
       )
       setTimeout(() => {
-        window.location = '/menu'
+        window.location = '/'
       }, 2000)
     }
   }

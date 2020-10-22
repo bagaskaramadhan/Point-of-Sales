@@ -3,12 +3,12 @@
       <b-row class="card home">
         <b-col lg="12">
           <b-row>
-            <b-col lg="7" class="image">
+            <b-col lg="6" class="image">
               <div class="left ">
-                <img src="../assets/img/undraw_eating_together_tjhx (1).svg" alt="">
+                <img src="../assets/img/foodcourt-logo.png">
               </div>
             </b-col>
-            <b-col lg="5" cols="12" class="card-body my-5">
+            <b-col lg="6" cols="12" class="card-body my-5">
               <div class="right ">
                 <b-row>
                   <b-col lg="12" class="text-center">
@@ -17,20 +17,18 @@
                   <b-col lg="12" cols="12">
                     <form v-on:submit.prevent="onLogin()">
                       <div class="form-group">
-                        <label >Email address</label>
-                        <input v-model="form.email" type="email" class="form-control">
+                        <input v-model="form.email" placeholder="Email" type="email" class="form-control">
                       </div>
                       <div class="form-group">
-                        <label >Password</label>
-                        <input v-model="form.password" type="password" class="form-control">
+                        <input v-model="form.password" placeholder="Password" type="password" class="form-control">
                       </div>
                       <b-col lg="12">
                         <b-row>
                           <b-col lg="4" cols="4">
-                            <button type="submit" class="btn mt-1 btn-primary">Submit</button>
+                            <button type="submit" class="btn btnStyle">Login</button>
                           </b-col>
                           <b-col lg="8" cols="8">
-                            <b-col lg="12" cols="12" class="register">Don't have account?<router-link to="/register">Register</router-link></b-col>
+                            <b-col lg="12" cols="12" class="register">Don't have account? <router-link class="linkStyle" to="/register">Sign up</router-link></b-col>
                           </b-col>
                         </b-row>
                       </b-col>
@@ -48,6 +46,7 @@
 import Swal from 'sweetalert2'
 import { mapActions } from 'vuex'
 export default {
+  title: 'Foodcourt | Login',
   data () {
     return {
       form: {
@@ -58,25 +57,32 @@ export default {
   },
   methods: {
     onLogin () {
-      this.actionLogin(this.form).then((response) => {
-        if (response === 'Login Success') {
-          window.location = '/menu'
-        } else {
+      if (this.form.email === '' || this.form.password === '') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Cannot be empty!'
+        })
+      } else {
+        this.actionLogin(this.form).then((response) => {
+          if (response === 'Login Success') {
+            window.location = '/'
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `${response}`
+            })
+          }
+          // eslint-disable-next-line handle-callback-err
+        }).catch((err) => {
+          console.log(err)
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: `${response}`
+            text: 'Something went wrong!'
           })
-        }
-      // eslint-disable-next-line handle-callback-err
-      }).catch((err) => {
-        console.log(err)
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!'
         })
-      })
+      }
     },
     ...mapActions({
       actionLogin: 'auth/login'
@@ -85,11 +91,22 @@ export default {
 }
 </script>
 <style scoped>
-  /* .left{
-    position: fixed;
-} */
-.left img{
+.linkStyle {
+  text-decoration: none;
+  color: #04b4bc;
+}
+.btnStyle{
   width: 100%;
+  background: #04b4bc;
+  color: #fff;
+}
+.btnStyle:hover{
+  background: #fff;
+  border-color: #04b4bc;
+  color: #04b4bc;
+}
+.left img{
+  width: 70%;
 }
 .home{
   margin: 50px;
