@@ -3,38 +3,17 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import axios from 'axios'
-import { url } from '../src/helpers/env'
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import titleMixin from './mixins/titleMixin'
-Vue.mixin(titleMixin)
-axios.interceptors.response.use(function (response) {
-  return response
-}, function (error) {
-  console.log(error.response.data.message)
-  // return Promise.reject(error)
-  if (error.response.data.message === 'Token Expired !') {
-    return new Promise((resolve, reject) => {
-      const refreshtoken = localStorage.getItem('refreshtoken')
-      axios.post(`${url}/users/tokenrefresh`, {
-        tokenReq: refreshtoken
-      }).then((result) => {
-        localStorage.setItem('token', result.data.newtoken)
-        window.location = '/'
-      }).catch((err) => {
-        console.log(err)
-      })
-    })
-  }
-})
+import axios from 'axios'
 
 axios.defaults.headers = {
   token: localStorage.getItem('token')
 }
 
+// Install BootstrapVue
 Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false

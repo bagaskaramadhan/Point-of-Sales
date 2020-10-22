@@ -1,150 +1,110 @@
 <template>
-  <div>
-    <!-- Modal Add-->
-    <div class="modal" id="add-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <form class="form-add" @submit.prevent="insert()" enctype="multipart/form-data">
-              <h5 class="modal-title mb-4 font-weight-bold">Add Item</h5>
-              <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Name</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control shadow-input" v-model="form.productname" />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="image" class="col-sm-2 col-form-label">Image</label>
-                <div class="col-sm-10">
-                  <input type="file" @change="process($event)"  class="form-control shadow-input"/>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="price" class="col-sm-2 col-form-label">Price</label>
-                <div class="col-sm-7">
-                  <input type="number" id="price" class="form-control shadow-input" v-model="form.price" />
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="category" class="col-sm-2 col-form-label">Category</label>
-                <div class="col-sm-5">
-                  <select id="category" class="form-control shadow-input" v-model="form.id_category">
-                    <option selected value disabled>Choose Category</option>
-                    <option v-for="(item, index) in Category.data" :key="index" :value="item.id_category">{{item.category}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-sm-12 text-right btn-footer">
-                  <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
-                  <button type="submit" class="btn btn-add">Add</button>
-                </div>
-              </div>
-            </form>
+    <div>
+<b-modal id="addProduct" hide-footer centered title="Add Item">
+    <b-row>
+        <b-col lg="12">
+            <form @submit.prevent="insert" enctype="multipart/form-data">
+            <b-row class="my-3">
+                <b-col lg="3" cols="3">Name</b-col>
+                <b-col lg="9" cols="9">
+                    <b-form-input type="text" v-model="input.name" required placeholder="Item Name ..."></b-form-input>
+                </b-col>
+            </b-row>
+            <b-row class="my-3">
+                <b-col lg="3" cols="3">Image</b-col>
+                <b-col lg="9" cols="9">
+                    <b-form-file type="file" @change="processFile($event)" required></b-form-file>
+                </b-col>
+            </b-row>
+            <b-row class="my-3">
+                <b-col lg="3" cols="3">Price</b-col>
+                <b-col lg="9" cols="9">
+                    <b-form-input type="number" v-model="input.price" required placeholder="Item Price ..."></b-form-input>
+                </b-col>
+            </b-row>
+            <b-row class="my-3">
+                <b-col lg="3" cols="3">Category</b-col>
+                <b-col lg="9" cols="9">
+                  <b-form-select v-model="input.category_id">
+                    <b-form-select-option v-for="(item, index) in category" :key="index" :value="item.id" required>
+              {{item.category_name}}
+            </b-form-select-option>
+                  </b-form-select>
+                  <!-- <div>
+                    <b-form-select v-model="category">
+                    <b-form-select-option v-for="(item,index) in categories" :key="index" :value="item.category_id">{{item.category_name}}</b-form-select-option>
+                  </b-form-select>
+                  </div> -->
+                </b-col>
+            </b-row>
+             <div class="form-button">
+            <!-- <input type="submit" value="Send"/> -->
+            <!-- <input type="button" value="cancel" @click="$emit('addclose')"/> -->
+            <b-button class="mt-3" variant="outline-success" type="submit" block @click="load()" name="button">Add</b-button>
+            <b-button class="mt-3" variant="outline-danger" type="button" block @click="hideModal()">Cancel</b-button>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+            </form>
+        </b-col>
+    </b-row>
+  </b-modal>
+</div>
 
+</template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import Swal from 'sweetalert2'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'ModalAdd',
   data () {
     return {
-      form: {
-        productname: '',
-        price: '',
-        image: '',
-        id_category: ''
+      input: {
+        name: null,
+        category_id: null,
+        price: null,
+        image: null
       }
     }
   },
   computed: {
     ...mapGetters({
-      Category: 'category/getAllCategory'
+      category: 'product/getAllCategory'
     })
   },
   methods: {
-    process (event) {
-      this.form.image = event.target.files[0]
-    },
     ...mapActions({
-      getAllCategory: 'category/getAllCategory'
+      getCategory: 'product/getCategory',
+      insert: 'product/insert'
     }),
-
-    insert () {
-      console.log(this.form.productname)
-      console.log(this.form.image)
-      console.log(this.form.price)
-      console.log(this.form.id_category)
-
-      const fd = new FormData()
-
-      fd.append('productname', this.form.productname)
-      fd.append('image', this.form.image)
-      fd.append('price', this.form.price)
-      fd.append('id_category', this.form.id_category)
-
-      this.insertData(fd).then((response) => {
-        alert('Insert data success')
-        window.location = '/'
-      }).catch((err) => {
-        alert(err)
-      })
+    load () {
+      this.input.image = this.image
+      this.insert(this.input)
+        .then((response) => {
+          if (response.data.message === 'Add produks success') {
+            Swal.fire(
+              'Good job!',
+              'Success Add Product!',
+              'success'
+            )
+            location.reload()
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: '<a href>Why do I have this issue?</a>'
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      console.log(this.input)
     },
-
-    ...mapActions({
-      insertData: 'products/insertData'
-    })
+    processFile (event) {
+      this.image = event.target.files[0]
+    }
   },
-  created () {
-    this.getAllCategory()
+  mounted () {
+    this.getCategory()
   }
 }
 </script>
-
-<style scoped>
-.form-add {
-  font-weight: bolder;
-}
-.btn-footer {
-  margin-top: 20px;
-  font-weight: bold;
-}
-.shadow-input {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-}
-.btn-add {
-  margin-left: 7px;
-  background: #57cad5;
-  color: #ffffff;
-  width: 20%;
-  font-weight: bold;
-}
-.btn-add:hover {
-  margin-left: 7px;
-  background: #45d0dd;
-  color: #ffffff;
-  width: 20%;
-  font-weight: bold;
-}
-.btn-cancel {
-  background: #f24f8a;
-  color: #ffffff;
-  width: 20%;
-  font-weight: bold;
-}
-.btn-cancel:hover {
-  background: #f0397c;
-  color: #ffffff;
-  width: 20%;
-  font-weight: bold;
-}
-</style>

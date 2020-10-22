@@ -1,46 +1,45 @@
 <template>
-  <div class="side">
-    <router-link to v-b-toggle.sidebar-1 class="side-cart">
-      <img src="../assets/icon/shopping_cart-black-48dp.svg" alt />
-    </router-link>
-
-    <router-link to="/">
-      <img src="../assets/img/fork.png" alt />
-    </router-link>
-
-    <router-link to="/history">
-      <img src="../assets/img/clipboard.png" alt />
-    </router-link>
-
-    <router-link to="" data-toggle="modal" data-target="#add-modal">
-      <img src="../assets/img/add.png" alt />
-    </router-link>
-
-    <!-- <router-link  @click="onLogout()">
-      <b-icon icon="door-closed" class="border rounded text-center logout" scale="3" ></b-icon>
-    </router-link> -->
-    <a style="cursor: pointer" @click="onLogout()">
-    <b-icon icon="door-closed" class="border rounded text-center logout" scale="3" ></b-icon>
-    </a>
-
-    <b-sidebar id="sidebar-1" width="100%" shadow>
-      <div class="px-3 py-2">
-        <Cart :newcart="newcart"/>
-      </div>
-    </b-sidebar>
-  </div>
+  <b-sidebar id="my-sidebar" width="80px" shadow>
+    <b-container fluid>
+      <b-row>
+        <b-col cols="12" class="product m-0 text-center mt-5">
+          <router-link to="/menu">
+            <img src="../assets/img/fork.png" alt="Menu" class="my-0" />
+            </router-link>
+            <p class="text-center">Foods</p>
+        </b-col>
+        <b-col cols="12" class="clipboard m-0 text-center">
+          <router-link to="/history">
+            <img src="../assets/img/clipboard.png" alt="History" class="my-0" />
+          </router-link>
+          <p class="text-center">History</p>
+        </b-col>
+        <b-col cols="12" class="add-produk m-0">
+         <button v-b-modal.addProduct><img
+            src="../assets/img/add.png"
+            alt="Add Menu"
+            class="addProduct"
+          /></button>
+          <p class="text-center">Add</p>
+          <ModalAdd />
+        </b-col>
+        <b-col lg="12" class="out">
+          <button class="btn" @click="onLogout()"><img src="../assets/img/logout.png"></button>
+          <p v-hai="'red'">{{name}}</p>
+        </b-col>
+      </b-row>
+    </b-container>
+  </b-sidebar>
 </template>
-
 <script>
-
-import Cart from '@/components/Cart.vue'
+import Swal from 'sweetalert2'
+import home from '../mixins/home'
 import { mapActions } from 'vuex'
-
+import ModalAdd from './ModalAdd'
 export default {
-  name: 'Sidebar',
-  props: ['newcart'],
+  mixins: [home],
   components: {
-    Cart
+    ModalAdd
   },
   methods: {
     ...mapActions({
@@ -48,46 +47,45 @@ export default {
     }),
     onLogout () {
       this.actionLogout().then(() => {
-        window.location = '/login'
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Logout!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Logout!',
+              'Your Account has been logout.',
+              'success'
+            )
+            setTimeout(
+              window.location = '/login'
+              , 3000)
+          }
+        })
       })
     }
   }
 }
-
 </script>
-
 <style scoped>
-.side img {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.side-cart {
-  display: none;
-}
-.logout{
-  margin-top: 20px;
-}
-@media (max-width: 992px) {
-  .main-cart {
-    display: none;
+  .add-produk img{
+    width: 35px;
+    height: 35px
   }
-  .side-cart {
-    display: unset;
+  .product img{
+     width: 35px;
+    height: 35px
   }
-
-  .side {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .clipboard img{
+     width: 35px;
+    height: 35px
   }
-  .side img {
-    margin-left: 10px;
-    margin-right: 10px;
+  .out img{
+    width: 80%;
   }
-  .logout {
-    margin-left: 20px;
-    margin-top: 0;
-  }
-}
 </style>

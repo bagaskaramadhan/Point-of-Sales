@@ -1,52 +1,91 @@
 <template>
-  <div>
-     <!-- Modal Checkout -->
-  <div class="modal" id="checkout-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body font-weight-bold">
-          <div class="row">
-            <div class="col-6 text-left">Checkout</div>
-            <div class="col-6 text-right">Receipt no: #010410919</div>
-          </div>
-          <div class="row">
-            <div class="col-6 text-left">Cashier : Pevita Pearce</div>
-          </div>
-          <br />
-          <br />
-          <div class="row">
-            <div class="col-6 mb-3 text-left">Coffe Latte 1x</div>
-            <div class="col-6 text-right">Rp. 15.000</div>
-          </div>
-          <div class="row">
-            <div class="col-6 mb-3 text-left">Black Forest 1x</div>
-            <div class="col-6 text-right">Rp. 30.000</div>
-          </div>
-          <div class="row">
-            <div class="col-6 mb-3 text-left">Salmon Truffle Teriyaki 1x</div>
-            <div class="col-6 text-right">Rp. 60.000</div>
-          </div>
-          <div class="row">
-            <div class="col-6 mb-4 text-left">Ppn 10 %</div>
-            <div class="col-6 text-right">Rp. 10.500</div>
-          </div>
-          <div class="row">
-            <div class="col-6"></div>
-            <div class="col-6 text-right">Total: Rp. 115.500</div>
-          </div>
-          <div class="row">
-            <div class="col-12 mb-3 text-left">Payment: Cash</div>
-          </div>
-          <button type="button" style="background: #f24f8a; color: #ffffff; font-size: 20px" class="btn btn-block mb-1">
-            <strong>Print</strong>
-          </button>
-          <h5 class="text-center"><strong>Or</strong></h5>
-          <button type="button" style="background: #57cad5; color: #ffffff; font-size: 20px" class="btn btn-block">
-            Send Email
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
+    <div>
+  <b-modal id="modal-co" hide-footer title="Modal Checkout">
+    <b-col lg="12">
+        <b-row>
+            <b-col lg="12">
+                <h4>Invoice #23</h4>
+            </b-col>
+           <b-col lg="12">
+               <b-row>
+                    <b-col lg="6" cols="6" class="mt-2">Cashier :</b-col>
+            <b-col lg="6" cols="6">
+                <input type="text" class="form-control" placeholder="input Your name...">
+            </b-col>
+               </b-row>
+           </b-col>
+           <b-col lg="12" class="mt-5">
+               <b-row>
+                   <b-col lg="5" cols="5">
+                       <p>Pesanan 1</p>
+                   </b-col>
+                   <b-col lg="2" cols="2" class="text-center">
+                       x2
+                   </b-col>
+                   <b-col lg="5" cols="5" class="text-center">
+                       <p>Rp. 15.000</p>
+                   </b-col>
+               </b-row>
+           </b-col>
+           <b-col lg="12" class="mt-2">
+               <b-row>
+                   <b-col lg="5" cols="5">
+                       <p>Pesanan 2</p>
+                   </b-col>
+                   <b-col lg="2" cols="2" class="text-center">
+                       x2
+                   </b-col>
+                   <b-col lg="5" cols="5" class="text-center">
+                       <p>Rp. 50.000</p>
+                   </b-col>
+               </b-row>
+           </b-col>
+           <b-col lg="12" class="mt-5">
+               <b-row>
+                   <b-col lg="6" cols="6" class="text-left">
+                       <h4>Total : </h4>
+                   </b-col>
+                   <b-col lg="6" cols="6" class="text-center">
+                       <h4>Rp. 80.000</h4>
+                   </b-col>
+               </b-row>
+           </b-col>
+           <b-col lg="12">
+               <p>*PPN 10%</p>
+           </b-col>
+           <b-col lg="12" class="my-3">
+               <button @click="print" class="btn btn-checkout text-white">PRINT</button>
+           </b-col>
+        </b-row>
+    </b-col>
+  </b-modal>
+</div>
 </template>
+<script>
+import Swal from 'sweetalert2'
+import JsPDF from 'jspdf'
+export default {
+  methods: {
+    print: function () {
+      const pdfName = 'Invoice'
+      var doc = new JsPDF()
+      doc.text('Ini invoice ceritanya', 10, 10)
+      doc.save(pdfName + '.pdf')
+      Swal.fire(
+        'Thank You!',
+        'Invoice Downloaded!',
+        'success'
+      )
+      setTimeout(() => {
+        window.location = '/menu'
+      }, 2000)
+    }
+  }
+}
+</script>
+<style scoped>
+.btn-checkout1{
+    background: #F24F8A;
+  width: 100%;
+}
+</style>

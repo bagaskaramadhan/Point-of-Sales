@@ -1,22 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import products from './products/index'
-import category from './category/index'
-import auth from './auth/index'
+// import axios from 'axios'
+import auth from './auth'
+import product from './product'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    products,
-    category,
-    auth
+    auth,
+    product
   }
-
-  // mutations: {
-  // },
-  // actions: {
-  // },
-  // modules: {
-  // }
 })

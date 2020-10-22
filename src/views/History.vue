@@ -1,88 +1,87 @@
 <template>
-  <div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="row navbar-history">
-            <div class="col-lg-1">
-              <img src="../assets/img/menu (1).png" alt />
-            </div>
-            <div class="col-lg-11">
-              <h3 class="font-weight-bold">History</h3>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-1 sidebar">
-              <!-- <img src="../assets/img/fork.png" alt />
-              <img src="../assets/img/clipboard.png" alt />
-              <img src="../assets/img/add.png" alt /> -->
-              <Sidebar/>
-            </div>
-            <div class="col-lg-11">
-              <div class="row">
-                <div class="col-lg-4 col-md-4 col-12">
-                  <div class="card text-white bg-primary">
-                    <div class="card-body">
-                      <h5 class="card-title">Primary card title</h5>
-                      <p
-                        class="card-text"
-                      >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-4 col-md-4 col-12">
-                  <div class="card text-white bg-primary">
-                    <div class="card-body">
-                      <h5 class="card-title">Primary card title</h5>
-                      <p
-                        class="card-text"
-                      >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-4 col-md-4 col-12">
-                  <div class="card text-white bg-primary">
-                    <div class="card-body">
-                      <h5 class="card-title">Primary card title</h5>
-                      <p
-                        class="card-text"
-                      >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<div>
+    <NavHistory />
+<b-row class="mx-2 my-3">
+  <b-col lg="12">
+    <b-row>
+        <b-col lg="4" md="12" class="today-income mx-2 my-2">
+        <div class="my-5 mx-5">
+            <p class="my-2">Today's Income</p>
+            <h3 >Rp. 1.000.000</h3>
+            <p>+2% Yesterday</p>
         </div>
-      </div>
-    </div>
-  </div>
+        </b-col>
+        <b-col lg="4" md="12" class="orders-chart mx-2 my-2">
+        <div class="my-5 mx-5">
+            <p class="my-2">Orders</p>
+            <h3 >3.270</h3>
+            <p>+5% Last Week</p>
+        </div>
+        </b-col>
+        <b-col class="years-chart mx-2  my-2">
+        <div class="my-5 mx-5">
+            <p class="my-2">This Year's Income</p>
+            <h3 >Rp. 100.000.000.000</h3>
+            <p>+10% Last Year</p>
+        </div>
+        </b-col>
+    </b-row>
+  </b-col>
+<b-col lg="12">
+  <b-row class="my-5">
+    <b-col lg="11" col="9">
+      <h3>Revenue</h3>
+    </b-col>
+    <b-col lg="1" cols="3">
+      <b-dropdown id="dropdown-1" text="Month" class="m-0 text-right">
+        </b-dropdown>
+    </b-col>
+  </b-row>
+  <b-row>
+    <b-col lg="12" class="my-5">
+      <h2 class="text-center">This is not yet</h2>
+    </b-col>
+  </b-row>
+</b-col>
+<!-- table -->
+
+  <b-col lg="12" class="my-5">
+    <Table />
+  </b-col>
+
+</b-row>
+</div>
 </template>
-
 <script>
-
-import Sidebar from '@/components/Sidebar.vue'
-
+import Table from '../components/Table'
+import NavHistory from '../components/NavHistory'
+// import TodayIncome from '../components/TodayIncome'
+// import OrdersChart from '../components/OrdersChart'
+// import IncomeYears from '../components/IncomeYears'
 export default {
-  name: 'About',
   components: {
-    Sidebar
+    NavHistory,
+    Table
+    // TodayIncome,
+    // OrdersChart,
+    // IncomeYears
   }
 }
 </script>
-
 <style scoped>
-.navbar-history {
-   display: flex;
-  align-items: center;
-  height: 70px;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-}
-.sidebar {
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-}
+.years-chart{
+        background: linear-gradient(278.29deg, #AB84C8 30.05%, rgba(241, 201, 236, 0) 133.19%);
+filter: drop-shadow(10px 15px 10px rgba(241, 201, 236, 0.25));
+border-radius: 10px;
+    }
+.today-income{
+        background: linear-gradient(278.29deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%);
+        filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
+        border-radius: 10px;
+    }
+    .orders-chart{
+        background: linear-gradient(278.29deg, #29DFFF 30.05%, rgba(41, 223, 255, 0) 133.19%);
+filter: drop-shadow(10px 15px 10px rgba(41, 223, 255, 0.25));
+border-radius: 10px;
+    }
 </style>
