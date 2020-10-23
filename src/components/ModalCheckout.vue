@@ -69,7 +69,7 @@ export default {
     print: function () {
       const pdfName = 'Invoice'
       var doc = new JsPDF()
-      doc.text('Ini invoice ceritanya', 10, 10)
+      doc.text('Thanks', 10, 10)
       doc.save(pdfName + '.pdf')
       Swal.fire(
         'Thank You!',
