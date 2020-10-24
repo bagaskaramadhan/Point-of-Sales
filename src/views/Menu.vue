@@ -154,7 +154,7 @@
                         :key="index"
                       >
                         <div class="item card">
-                          <img :src="`http://localhost:3012/${item.image}`" />
+                          <img :src="`${URL}/${item.image}`" />
                         </div>
                         <div class="row">
                           <div
@@ -227,7 +227,7 @@
                   <b-col lg="12" v-for="(item,index) in cart" :key="index">
                     <b-row class="mt-4">
                       <b-col lg="3" cols="3">
-                        <img :src="`http://localhost:3012/${item.image}`" width="80px" height="80px" alt="">
+                        <img :src="`${URL}/${item.image}`" width="80px" height="80px" alt="">
                       </b-col>
                       <b-col lg="6" cols="6" class="text-center">
                         <h5>{{item.name}}</h5>
@@ -272,7 +272,7 @@
                   <b-col lg="12" v-for="(item,index) in cart" :key="index">
                     <b-row class="mt-4">
                       <b-col lg="3" cols="3">
-                        <img :src="`http://localhost:3012/${item.image}`" width="80px" height="80px" alt="">
+                        <img :src="`${URL}/${item.image}`" width="80px" height="80px" alt="">
                       </b-col>
                       <b-col lg="6" cols="6" class="text-center">
                         <h5>{{item.name}}</h5>
@@ -366,9 +366,11 @@ import LeftHead from '../components/LeftHead'
 import EmptyCart from '../components/EmptyCart'
 // import ModalEdit from '../components/ModalEdit'
 import { mapActions, mapGetters } from 'vuex'
+const { URL } = require('../helper/env')
 export default {
   data () {
     return {
+      URL: URL,
       idProduct: null,
       indexProduct: null,
       priceCart: null,
