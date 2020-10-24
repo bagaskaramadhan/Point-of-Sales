@@ -63,25 +63,25 @@ export default {
           title: 'Cannot be empty!'
         })
       } else {
-        this.actionLogin(this.form).then((response) => {
-          if (response === 'Login Success') {
-            window.location = '/'
-          } else {
+        this.actionLogin(this.form)
+          .then((response) => {
+            if (response === 'Login Success') {
+              window.location = '/'
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${response}`
+              })
+            }
+          })
+          .catch(() => {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: `${response}`
+              text: 'Something went wrong!'
             })
-          }
-          // eslint-disable-next-line handle-callback-err
-        }).catch((err) => {
-          console.log(err)
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!'
           })
-        })
       }
     },
     ...mapActions({

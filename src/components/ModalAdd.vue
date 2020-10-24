@@ -94,10 +94,10 @@ export default {
             })
           }
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          // console.log(err)
         })
-      console.log(this.input)
+      // console.log(this.input)
     },
     processFile (event) {
       this.image = event.target.files[0]
